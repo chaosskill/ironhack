@@ -1,0 +1,14 @@
+name: Automatic commit
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run commit script
+        run: sh commit.sh
