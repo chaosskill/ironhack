@@ -17,6 +17,11 @@ jobs:
           git config --local user.name "chaosskill"
           git config --local user.email "chaosskill@gmail.com"
 
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+
       - name: Make a commit
         run: |
           echo "New commit" >> README.md
