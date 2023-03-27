@@ -1,14 +1,30 @@
-name: Automatic commit
+name: Auto Commit
 
 on:
   schedule:
     - cron: '0 * * * *'
 
 jobs:
-  commit:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
+      - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Run commit script
-        run: sh commit.sh
+
+      - name: Set Git user name and email
+        run: |
+          git config --local user.name "chaosskill"
+          git config --local user.email "chaosskill@gmail.com"
+
+      - name: Make a commit
+        run: |
+          echo "New commit" >> README.md
+          git add README.md
+          git commit -m "Auto commit $(date -u +'%Y-%m-%d %H:%M:%S')"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
