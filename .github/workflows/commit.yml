@@ -9,9 +9,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
+    - name: Checkout repo
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.ref }}
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        NODE_VERSION: 16.x
+        
       - name: Set Git user name and email
         run: |
           git config --local user.name "chaosskill"
