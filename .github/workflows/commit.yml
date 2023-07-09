@@ -2,7 +2,7 @@ name: Auto Commit
 
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 0 * * *'
 
 jobs:
   build:
@@ -12,30 +12,22 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v2
       with:
-        ref: ${{ github.ref }}
         fetch-depth: 0
         token: ${{ secrets.GITHUB_TOKEN }}
-      env:
-        NODE_VERSION: 16.x
-        
-      - name: Set Git user name and email
-        run: |
-          git config --local user.name "chaosskill"
-          git config --local user.email "chaosskill@gmail.com"
 
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
+    - name: Set Git user name and email
+      run: |
+        git config --local user.name "chaosskill"
+        git config --local user.email "chaosskill@gmail.com"
 
-      - name: Make a commit
-        run: |
-          echo "New commit" >> README.md
-          git add README.md
-          git commit -m "Auto commit $(date -u +'%Y-%m-%d %H:%M:%S')"
+    - name: Make a commit
+      run: |
+        echo "New commit" >> README.md
+        git add README.md
+        git commit -m "Auto commit $(date -u +'%Y-%m-%d %H:%M:%S')"
 
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: master
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: master
