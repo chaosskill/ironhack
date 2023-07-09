@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
 
       - name: Set Git user name and email
         run: |
@@ -28,9 +31,4 @@ jobs:
           echo "New commit" >> README.md
           git add README.md
           git commit -m "Auto commit $(date -u +'%Y-%m-%d %H:%M:%S')"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          branch: master
+          git push
