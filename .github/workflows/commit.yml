@@ -31,4 +31,4 @@ jobs:
           echo "New commit" >> README.md
           git add README.md
           git commit -m "Auto commit $(date -u +'%Y-%m-%d %H:%M:%S')"
-          git push
+          git -c http.extraheader="AUTHORIZATION: bearer ${{ secrets.REPO_ACCESS_TOKEN }}" push origin HEAD:master
